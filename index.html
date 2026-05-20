@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>박희정 | 프롤레타리아</title>
+  <meta name="description" content="박희정 - 프롤레타리아 | 룰루랄라" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="박희정 | 프롤레타리아" />
+  <meta property="og:description" content="룰루랄라" />
+  <meta property="og:image" content="./og.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:locale" content="ko_KR" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="박희정 | 프롤레타리아" />
+  <meta name="twitter:description" content="룰루랄라" />
+  <meta name="twitter:image" content="./og.png" />
+
+  <!-- Favicon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✨</text></svg>" />
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ===== Reset & Base ===== */
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      font-size: 16px;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Inter', 'Noto Sans KR', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: #08080f;
+      color: #f0f0f5;
+      min-height: 100dvh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* ===== Animated Background ===== */
+    .bg-canvas {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .bg-canvas::before {
+      content: '';
+      position: absolute;
+      width: 600px;
+      height: 600px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255, 140, 50, 0.12) 0%, transparent 70%);
+      top: -150px;
+      right: -150px;
+      animation: floatOrb1 18s ease-in-out infinite;
+    }
+
+    .bg-canvas::after {
+      content: '';
+      position: absolute;
+      width: 500px;
+      height: 500px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(180, 100, 255, 0.10) 0%, transparent 70%);
+      bottom: -100px;
+      left: -100px;
+      animation: floatOrb2 22s ease-in-out infinite;
+    }
+
+    .bg-orb-3 {
+      position: absolute;
+      width: 400px;
+      height: 400px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(100, 200, 255, 0.07) 0%, transparent 70%);
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      animation: floatOrb3 15s ease-in-out infinite;
+    }
+
+    @keyframes floatOrb1 {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      33% { transform: translate(-60px, 40px) scale(1.1); }
+      66% { transform: translate(30px, -30px) scale(0.95); }
+    }
+
+    @keyframes floatOrb2 {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      33% { transform: translate(50px, -50px) scale(1.05); }
+      66% { transform: translate(-40px, 30px) scale(0.9); }
+    }
+
+    @keyframes floatOrb3 {
+      0%, 100% { transform: translate(-50%, -50%) scale(1); }
+      50% { transform: translate(-50%, -50%) scale(1.3); }
+    }
+
+    /* ===== Card Container ===== */
+    .card-wrapper {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 420px;
+      padding: 20px;
+    }
+
+    .card {
+      position: relative;
+      background: rgba(255, 255, 255, 0.04);
+      backdrop-filter: blur(40px);
+      -webkit-backdrop-filter: blur(40px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 28px;
+      padding: 44px 32px 36px;
+      overflow: hidden;
+      animation: cardEntry 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+      opacity: 0;
+      transform: translateY(30px);
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
+    }
+
+    .card::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: conic-gradient(
+        from 180deg at 50% 50%,
+        transparent 0deg,
+        rgba(255, 160, 60, 0.03) 90deg,
+        transparent 180deg,
+        rgba(160, 120, 255, 0.03) 270deg,
+        transparent 360deg
+      );
+      animation: shimmer 8s linear infinite;
+      pointer-events: none;
+    }
+
+    @keyframes cardEntry {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes shimmer {
+      to { transform: rotate(360deg); }
+    }
+
+    /* ===== Profile Photo ===== */
+    .profile-section {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    .photo-container {
+      position: relative;
+      width: 130px;
+      height: 130px;
+      margin-bottom: 24px;
+      animation: photoEntry 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.2s forwards;
+      opacity: 0;
+      transform: scale(0.8);
+    }
+
+    .photo-container::before {
+      content: '';
+      position: absolute;
+      inset: -3px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #ff9a56, #c084fc, #60a5fa);
+      opacity: 0.7;
+      animation: ringPulse 3s ease-in-out infinite;
+    }
+
+    .photo-container::after {
+      content: '';
+      position: absolute;
+      inset: -8px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #ff9a56, #c084fc, #60a5fa);
+      opacity: 0.15;
+      filter: blur(12px);
+      animation: glowPulse 3s ease-in-out infinite;
+    }
+
+    @keyframes photoEntry {
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    @keyframes ringPulse {
+      0%, 100% { opacity: 0.6; }
+      50% { opacity: 0.9; }
+    }
+
+    @keyframes glowPulse {
+      0%, 100% { opacity: 0.15; transform: scale(1); }
+      50% { opacity: 0.25; transform: scale(1.05); }
+    }
+
+    .photo {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid #12121a;
+      z-index: 1;
+    }
+
+    /* ===== Name & Info ===== */
+    .name-section {
+      text-align: center;
+      margin-bottom: 8px;
+      animation: fadeUp 0.6s cubic-bezier(0.22, 1, 0.36, 1) 0.35s forwards;
+      opacity: 0;
+      transform: translateY(15px);
+    }
+
+    .name {
+      font-size: 1.75rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      background: linear-gradient(135deg, #ffffff 0%, #d4d4e0 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1.3;
+    }
+
+    .name-en {
+      font-size: 0.8rem;
+      font-weight: 400;
+      color: rgba(255, 255, 255, 0.35);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-top: 4px;
+    }
+
+    .company {
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: rgba(255, 180, 100, 0.85);
+      margin-top: 12px;
+      letter-spacing: 0.04em;
+      animation: fadeUp 0.6s cubic-bezier(0.22, 1, 0.36, 1) 0.45s forwards;
+      opacity: 0;
+      transform: translateY(15px);
+    }
+
+    .tagline {
+      font-size: 0.85rem;
+      font-weight: 300;
+      color: rgba(255, 255, 255, 0.45);
+      margin-top: 8px;
+      letter-spacing: 0.02em;
+      animation: fadeUp 0.6s cubic-bezier(0.22, 1, 0.36, 1) 0.55s forwards;
+      opacity: 0;
+      transform: translateY(15px);
+    }
+
+    @keyframes fadeUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* ===== Divider ===== */
+    .divider {
+      width: 48px;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, rgba(255, 180, 100, 0.5), transparent);
+      margin: 28px auto;
+      border-radius: 2px;
+      animation: fadeUp 0.6s cubic-bezier(0.22, 1, 0.36, 1) 0.6s forwards;
+      opacity: 0;
+    }
+
+    /* ===== Contact Buttons ===== */
+    .contact-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .contact-item {
+      animation: fadeUp 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+      opacity: 0;
+      transform: translateY(15px);
+    }
+
+    .contact-item:nth-child(1) { animation-delay: 0.65s; }
+    .contact-item:nth-child(2) { animation-delay: 0.75s; }
+    .contact-item:nth-child(3) { animation-delay: 0.85s; }
+
+    .contact-link {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 14px 18px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 16px;
+      text-decoration: none;
+      color: #f0f0f5;
+      transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .contact-link::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(255, 180, 100, 0.08), rgba(160, 120, 255, 0.08));
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .contact-link:hover,
+    .contact-link:active {
+      border-color: rgba(255, 255, 255, 0.12);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    }
+
+    .contact-link:hover::before,
+    .contact-link:active::before {
+      opacity: 1;
+    }
+
+    .contact-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      position: relative;
+      z-index: 1;
+    }
+
+    .contact-icon.phone {
+      background: linear-gradient(135deg, rgba(52, 211, 153, 0.15), rgba(52, 211, 153, 0.05));
+    }
+
+    .contact-icon.email {
+      background: linear-gradient(135deg, rgba(96, 165, 250, 0.15), rgba(96, 165, 250, 0.05));
+    }
+
+    .contact-icon.website {
+      background: linear-gradient(135deg, rgba(192, 132, 252, 0.15), rgba(192, 132, 252, 0.05));
+    }
+
+    .contact-icon svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    .contact-text {
+      position: relative;
+      z-index: 1;
+    }
+
+    .contact-label {
+      font-size: 0.7rem;
+      font-weight: 500;
+      color: rgba(255, 255, 255, 0.35);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: 2px;
+    }
+
+    .contact-value {
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: rgba(255, 255, 255, 0.85);
+      letter-spacing: 0.01em;
+    }
+
+    .contact-arrow {
+      margin-left: auto;
+      position: relative;
+      z-index: 1;
+      opacity: 0.25;
+      transition: all 0.3s ease;
+    }
+
+    .contact-link:hover .contact-arrow {
+      opacity: 0.6;
+      transform: translateX(3px);
+    }
+
+    .contact-arrow svg {
+      width: 16px;
+      height: 16px;
+    }
+
+    /* ===== Action Buttons ===== */
+    .actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 24px;
+      position: relative;
+      z-index: 1;
+      animation: fadeUp 0.6s cubic-bezier(0.22, 1, 0.36, 1) 0.95s forwards;
+      opacity: 0;
+      transform: translateY(15px);
+    }
+
+    .action-btn {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 14px 16px;
+      border: none;
+      border-radius: 14px;
+      font-family: inherit;
+      font-size: 0.82rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .action-btn svg {
+      width: 18px;
+      height: 18px;
+      flex-shrink: 0;
+    }
+
+    .btn-save {
+      background: linear-gradient(135deg, #ff9a56, #e8794a);
+      color: #0a0a0f;
+    }
+
+    .btn-save:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 28px rgba(255, 154, 86, 0.3);
+    }
+
+    .btn-save:active {
+      transform: translateY(0);
+    }
+
+    .btn-share {
+      background: rgba(255, 255, 255, 0.06);
+      color: rgba(255, 255, 255, 0.8);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .btn-share:hover {
+      background: rgba(255, 255, 255, 0.1);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 28px rgba(0, 0, 0, 0.3);
+    }
+
+    .btn-share:active {
+      transform: translateY(0);
+    }
+
+    /* ===== Toast Notification ===== */
+    .toast {
+      position: fixed;
+      bottom: 40px;
+      left: 50%;
+      transform: translateX(-50%) translateY(80px);
+      background: rgba(30, 30, 45, 0.95);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: #f0f0f5;
+      padding: 14px 24px;
+      border-radius: 14px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      z-index: 100;
+      opacity: 0;
+      transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+      pointer-events: none;
+      white-space: nowrap;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    /* ===== Footer ===== */
+    .footer {
+      text-align: center;
+      margin-top: 20px;
+      padding-top: 0;
+      position: relative;
+      z-index: 1;
+      animation: fadeUp 0.6s cubic-bezier(0.22, 1, 0.36, 1) 1.05s forwards;
+      opacity: 0;
+    }
+
+    .footer-text {
+      font-size: 0.65rem;
+      color: rgba(255, 255, 255, 0.15);
+      letter-spacing: 0.08em;
+    }
+
+    /* ===== Responsive ===== */
+    @media (max-width: 380px) {
+      .card {
+        padding: 36px 24px 30px;
+        border-radius: 24px;
+      }
+
+      .name {
+        font-size: 1.5rem;
+      }
+
+      .photo-container {
+        width: 110px;
+        height: 110px;
+      }
+
+      .actions {
+        flex-direction: column;
+      }
+    }
+
+    @media (min-width: 768px) {
+      .card-wrapper {
+        max-width: 440px;
+      }
+    }
+
+    /* ===== Ripple Effect ===== */
+    .ripple {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.15);
+      transform: scale(0);
+      animation: rippleAnim 0.6s ease-out;
+      pointer-events: none;
+    }
+
+    @keyframes rippleAnim {
+      to {
+        transform: scale(4);
+        opacity: 0;
+      }
+    }
+
+    /* ===== Accessibility ===== */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Animated Background -->
+  <div class="bg-canvas" aria-hidden="true">
+    <div class="bg-orb-3"></div>
+  </div>
+
+  <!-- Card -->
+  <main class="card-wrapper">
+    <article class="card" id="business-card">
+
+      <!-- Profile Section -->
+      <section class="profile-section">
+        <div class="photo-container">
+          <img
+            src="myphoto.jpg"
+            alt="박희정 프로필 사진"
+            class="photo"
+            loading="eager"
+            decoding="async"
+          />
+        </div>
+
+        <div class="name-section">
+          <h1 class="name">박희정</h1>
+          <p class="name-en">heejung park</p>
+        </div>
+
+        <p class="company">프롤레타리아</p>
+        <p class="tagline">룰루랄라</p>
+      </section>
+
+      <!-- Divider -->
+      <div class="divider" aria-hidden="true"></div>
+
+      <!-- Contact List -->
+      <nav class="contact-list" aria-label="연락처 정보">
+
+        <!-- Phone -->
+        <div class="contact-item">
+          <a href="tel:01032421669" class="contact-link" id="link-phone" aria-label="전화 걸기: 010-3242-1669">
+            <div class="contact-icon phone">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#34d399" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/>
+              </svg>
+            </div>
+            <div class="contact-text">
+              <div class="contact-label">Phone</div>
+              <div class="contact-value">010-3242-1669</div>
+            </div>
+            <div class="contact-arrow">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="9 18 15 12 9 6"/>
+              </svg>
+            </div>
+          </a>
+        </div>
+
+      </nav>
+
+      <!-- Action Buttons -->
+      <div class="actions">
+        <button class="action-btn btn-save" id="btn-save-contact" aria-label="연락처 저장">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+            <polyline points="7 10 12 15 17 10"/>
+            <line x1="12" y1="15" x2="12" y2="3"/>
+          </svg>
+          연락처 저장
+        </button>
+        <button class="action-btn btn-share" id="btn-share" aria-label="명함 공유">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="18" cy="5" r="3"/>
+            <circle cx="6" cy="12" r="3"/>
+            <circle cx="18" cy="19" r="3"/>
+            <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/>
+            <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
+          </svg>
+          공유
+        </button>
+      </div>
+
+      <!-- Footer -->
+      <div class="footer">
+        <p class="footer-text">© 2025 HEEJUNG PARK</p>
+      </div>
+
+    </article>
+  </main>
+
+  <!-- Toast -->
+  <div class="toast" id="toast" role="alert" aria-live="polite"></div>
+
+  <script>
+    // ===== Toast Notification =====
+    function showToast(message, duration = 2500) {
+      const toast = document.getElementById('toast');
+      toast.textContent = message;
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), duration);
+    }
+
+    // ===== Save Contact (VCard) =====
+    document.getElementById('btn-save-contact').addEventListener('click', function (e) {
+      addRipple(e, this);
+
+      const vcard = [
+        'BEGIN:VCARD',
+        'VERSION:3.0',
+        'FN:박희정',
+        'N:박;희정;;;',
+        'ORG:프롤레타리아',
+        'TITLE:프롤레타리아',
+        'TEL;TYPE=CELL:010-3242-1669',
+        'NOTE:룰루랄라',
+        'END:VCARD'
+      ].join('\n');
+
+      const blob = new Blob([vcard], { type: 'text/vcard;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = '박희정.vcf';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+
+      showToast('✅ 연락처가 다운로드되었습니다');
+    });
+
+    // ===== Share =====
+    document.getElementById('btn-share').addEventListener('click', async function (e) {
+      addRipple(e, this);
+
+      if (navigator.share) {
+        try {
+          await navigator.share({
+            title: '박희정 | 프롤레타리아',
+            text: '박희정님의 디지털 명함입니다.',
+            url: window.location.href,
+          });
+        } catch (err) {
+          if (err.name !== 'AbortError') {
+            fallbackCopy();
+          }
+        }
+      } else {
+        fallbackCopy();
+      }
+    });
+
+    function fallbackCopy() {
+      navigator.clipboard.writeText(window.location.href).then(() => {
+        showToast('📋 링크가 복사되었습니다');
+      }).catch(() => {
+        showToast('🔗 공유 URL: ' + window.location.href);
+      });
+    }
+
+    // ===== Ripple Effect =====
+    function addRipple(e, el) {
+      const rect = el.getBoundingClientRect();
+      const ripple = document.createElement('span');
+      ripple.classList.add('ripple');
+      const size = Math.max(rect.width, rect.height);
+      ripple.style.width = ripple.style.height = size + 'px';
+      ripple.style.left = (e.clientX - rect.left - size / 2) + 'px';
+      ripple.style.top = (e.clientY - rect.top - size / 2) + 'px';
+      el.appendChild(ripple);
+      ripple.addEventListener('animationend', () => ripple.remove());
+    }
+
+    // ===== Contact Link Ripples =====
+    document.querySelectorAll('.contact-link').forEach(link => {
+      link.addEventListener('click', function (e) {
+        addRipple(e, this);
+      });
+    });
+  </script>
+
+</body>
+</html>
